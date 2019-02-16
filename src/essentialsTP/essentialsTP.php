@@ -83,7 +83,7 @@ class essentialsTP extends PluginBase  implements CommandExecutor, Listener {
         if (count($sql) > 0){
 
             switch ($type){
-                case 'home':
+               /* case 'home':
                      $this->prepare = $this->db2->prepare("UPDATE cooldowns SET home = :time WHERE player = :name");
                     $this->prepare->bindValue(":name", $name, SQLITE3_TEXT);
                     $this->prepare->bindValue(":time", time(), SQLITE3_INTEGER);
@@ -141,7 +141,7 @@ class essentialsTP extends PluginBase  implements CommandExecutor, Listener {
             }
         }
     }
-
+*/
     public function onPlayerDeath(PlayerDeathEvent $event){
         $player = $event->getEntity();
         $this->death_loc[$player->getName()] = new Position(
@@ -513,7 +513,7 @@ class essentialsTP extends PluginBase  implements CommandExecutor, Listener {
                 $sender->sendMessage(TextFormat::GOLD.'[MOTD] '.TextFormat::WHITE.$this->config->get("MOTD"));
                 return true;
                 break;
-            case 'home':
+            /*case 'home':
                 if ($sender instanceof Player)
                 {
                     if (!$sender->hasPermission("essentialstp.command.home")) {
@@ -687,7 +687,7 @@ class essentialsTP extends PluginBase  implements CommandExecutor, Listener {
                     $sender->sendMessage(TextFormat::RED.$this->config->get("Lang_command_only_use_ingame"));
                     return true;
                 }
-                break;
+                break;*/
             case 'tpa':
                 if (!$sender->hasPermission("essentialstp.command.tpa")) {
                     $sender->sendMessage(TextFormat::RED . $this->config->get("Lang_no_permissions"));
@@ -707,6 +707,7 @@ class essentialsTP extends PluginBase  implements CommandExecutor, Listener {
                                 $this->getServer()->getPlayer($this->tp_reciver)->sendMessage($this->config->get("Lang_type").' ' . TextFormat::GOLD . '/tpaccept' . TextFormat::WHITE . ' '.$this->config->get("Lang_accept_request"));
                                 $this->getServer()->getPlayer($this->tp_reciver)->sendMessage($this->config->get("Lang_type").' ' . TextFormat::GOLD . '/tpdecline' . TextFormat::WHITE . ' '.$this->config->get("Lang_decline_request"));
                                 $this->getServer()->getPlayer($this->tp_reciver)->sendMessage($this->config->get("Lang_request_expire_1").' ' . TextFormat::GOLD .$this->config->get("tpa-here-cooldown").' '.$this->config->get("Lang_request_expire_2") . TextFormat::WHITE . ' '.$this->config->get("Lang_request_expire_3"));
+				$this->getServer()->getPlayer($this->tp_sender)->sendMessage("§dYou have sent a teleport request to §5$args[0]");
                                 $this->prepare = $this->db2->prepare("INSERT INTO tp_requests (player, player_from, type, time, status) VALUES (:name, :name_from, :type, :time, :status)");
                                 $this->prepare->bindValue(":name", trim(strtolower($this->tp_reciver)), SQLITE3_TEXT);
                                 $this->prepare->bindValue(":name_from", trim(strtolower($this->tp_sender)), SQLITE3_TEXT);
